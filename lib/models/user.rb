@@ -9,6 +9,7 @@ class User
 
   def connect(other_user)
     return unless other_user.uuid != uuid
+    return if connections.detect { |c| c[:uuid] == other_user.uuid }
 
     connections << { uuid: other_user.uuid, nickname: other_user.nickname }
     other_user.connections << { uuid: uuid, nickname: nickname }

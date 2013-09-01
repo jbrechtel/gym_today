@@ -5,14 +5,14 @@ class UserRepository
       if(uuid)
         YAML::load(redis.get(uuid))
       else
+        uuid = SecureRandom.uuid
         user = User.new(nickname: nickname, uuid: uuid)
         redis.set(uuid, user.to_yaml)
         user
       end
     end
 
-    def find(user_key)
-      uuid = redis.get(user_key)
+    def find(uuid)
       YAML::load(redis.get(uuid))
     end
 

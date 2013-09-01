@@ -1,13 +1,11 @@
 class Invite
-  attr_reader :owner, :key
+  attr_reader :owner, :uuid
   def initialize(attrs = {})
     @owner = attrs[:owner]
-    @key = attrs[:key]
+    @uuid = attrs[:uuid]
   end
 
   def from?(user)
-    puts "owner is: #{owner}"
-    puts "user.uuid is: #{user.uuid}"
     owner == user.uuid
   end
 end

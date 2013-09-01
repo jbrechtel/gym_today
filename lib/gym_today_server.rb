@@ -32,10 +32,15 @@ class GymTodayServer < Sinatra::Base
     haml :authenticated, :layout => :default
   end
 
+  post '/log_out' do
+    session.clear
+    redirect '/'
+  end
+
   post '/invites' do
     content_type :json
     invite = InviteRepository.create(session[:user])
-    { :invite_url => url("/invites/#{invite.key}") }.to_json
+    { :invite_url => url("/invites/#{invite.uuid}") }.to_json
   end
 
   post '/connections/:uuid' do
@@ -62,13 +67,5 @@ class GymTodayServer < Sinatra::Base
       session[:user_key] = user_key
       redirect '/'
     end
-  end
-
-  post '/auth/:name/callback' do
-    puts request.env['omniauth.auth']
-  end
-
-  get '/auth/:name/callback' do
-    puts request.env['omniauth.auth']
   end
 end
