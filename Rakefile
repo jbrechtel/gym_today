@@ -2,7 +2,6 @@ require 'bundler'
 require 'bundler/setup'
 
 task :start do
-  require 'sinatra'
-  require_relative './lib/server'
-  GymToday.run!
+  require_relative './lib/gym_today'
+  GymTodayServer.run!
 end

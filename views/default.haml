@@ -8,4 +8,7 @@
       }
 
   %body
+    -if session[:user]
+      Welcome
+      =session[:user].nickname
     =yield
