@@ -1,14 +1,16 @@
 class User
-  attr_reader :nickname, :key, :connections
+  attr_reader :nickname, :uuid, :connections
 
   def initialize(attrs = {})
     @nickname = attrs[:nickname]
-    @key = attrs[:key]
+    @uuid = attrs[:uuid]
     @connections = attrs[:connections] || []
   end
 
   def connect(other_user)
-    connections << { key: other_user.key, nickname: other_user.nickname }
-    other_user.connections << { key: key, nickname: nickname }
+    return unless other_user.uuid != uuid
+
+    connections << { uuid: other_user.uuid, nickname: other_user.nickname }
+    other_user.connections << { uuid: uuid, nickname: nickname }
   end
 end

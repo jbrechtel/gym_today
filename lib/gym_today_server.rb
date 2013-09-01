@@ -1,5 +1,7 @@
 class GymTodayServer < Sinatra::Base
 
+  include ChallengeHelper
+
   use Rack::Session::Cookie
   use OmniAuth::Strategies::Twitter, Twitter.api_key, Twitter.secret
 
@@ -15,6 +17,10 @@ class GymTodayServer < Sinatra::Base
 
   get '/invites/:uuid' do
     invite = InviteRepository.find(params[:uuid])
+    if signed_in? && invite.from?(session[:user])
+      redirect '/'
+      return
+    end
     @inviter = UserRepository.find(invite.owner)
     @accept_path = "/connections/#{params[:uuid]}"
     view = signed_in? ? :authenticated_invite : :unauthenticated_invite
@@ -28,7 +34,7 @@ class GymTodayServer < Sinatra::Base
 
   post '/invites' do
     content_type :json
-    invite = InviteRepository.create(session[:user_key])
+    invite = InviteRepository.create(session[:user])
     { :invite_url => url("/invites/#{invite.key}") }.to_json
   end
 

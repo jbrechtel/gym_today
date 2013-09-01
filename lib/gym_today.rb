@@ -7,6 +7,7 @@ require 'haml'
 require 'redis'
 require 'json'
 
+require_relative 'helpers/challenge_helper'
 require_relative 'models/invite'
 require_relative 'models/user'
 require_relative 'repositories/invite_repository'
@@ -14,3 +15,4 @@ require_relative 'repositories/user_repository'
 require_relative 'twitter'
 require_relative 'github'
 require_relative 'gym_today_server'
+

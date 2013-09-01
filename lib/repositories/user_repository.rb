@@ -1,32 +1,30 @@
 class UserRepository
   class << self
-    def redis
-      @redis ||= Redis.new
-    end
-
-    def find_or_create(uid, nickname)
-      raw_user = redis.get(user_key(uid))
-      if(raw_user)
-        YAML::load(raw_user)
+    def find_or_create(user_key, nickname)
+      uuid = redis.get(user_key)
+      if(uuid)
+        YAML::load(redis.get(uuid))
       else
-        user = User.new(:nickname => nickname, :key => user_key(uid))
-        redis.set(user_key(uid), user.to_yaml)
+        user = User.new(nickname: nickname, uuid: uuid)
+        redis.set(uuid, user.to_yaml)
         user
       end
     end
 
-    def find(uid)
-      YAML::load(redis.get(user_key(uid)))
+    def find(user_key)
+      uuid = redis.get(user_key)
+      YAML::load(redis.get(uuid))
     end
 
     def save!(*users)
-      users.each { |u| redis.set(u.key, u.to_yaml) }
+      users.each { |u| redis.set(u.uuid, u.to_yaml) }
     end
 
     private
 
-    def user_key(uid)
-      "user_#{uid}"
+    def redis
+      @redis ||= Redis.new
     end
+
   end
 end

@@ -1,8 +1,8 @@
 class InviteRepository
   class << self
-    def create(user_key)
+    def create(user)
       uuid = SecureRandom.uuid
-      invite = Invite.new(:owner => user_key, :key => uuid)
+      invite = Invite.new(:owner => user.uuid, :key => uuid)
       redis.set(invite_key(uuid), invite.to_yaml)
       invite
     end

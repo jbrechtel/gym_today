@@ -1,13 +1,23 @@
-%h1 Gym today?
+.row
+  .col-lg-6
+    %h1 Gym today?
 
-%p.lead
-  The rules are simple. Ask a friend if they're going to the gym today. If they say yes then you have to go too and you get a point. If they say no then you're not obligated to go.
+    %p.lead
+      The rules are simple. Ask a friend if they're going to the gym today. If they say yes then you have to go too and you get a point. If they say no then you're not obligated to go.
 
--if session[:user]
-  %h4
-    Welcome
-    =session[:user].nickname
-%a.btn.btn-primary#new_invite{:href => '/invites'} Invite a gym buddy!
+    %h4
+      Welcome
+      =@user.nickname
+    %a.btn.btn-primary#new_invite{:href => '/invites'} Invite a gym buddy!
+  .col-lg-6
+    .well.sidebar-nav
+      %ul.nav
+        %li Connections
+        - @user.connections.each do |connection|
+          %li
+            %a{:href => challenge_path(connection[:key])}
+              Challenge
+              =connection[:nickname]
 
 :javascript
   $(document).ready(function() {
