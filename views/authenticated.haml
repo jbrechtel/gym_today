@@ -3,5 +3,24 @@
 %p.lead
   The rules are simple. Ask a friend if they're going to the gym today. If they say yes then you have to go too and you get a point. If they say no then you're not obligated to go.
 
-%a.btn.btn-primary{:href => '/auth/twitter'} Sign in
-%a.btn.btn-primary{:href => '/'} Log in
+-if session[:user]
+  %h4
+    Welcome
+    =session[:user].nickname
+%a.btn.btn-primary#new_invite{:href => '/invites'} Invite a gym buddy!
+
+:javascript
+  $(document).ready(function() {
+    $("#new_invite").click(function() {
+      var btn = $(this);
+      var url = $(this).attr('href');
+      $.post(url, function(data) {
+        var url = $('<input/>').addClass('form-control input-lg').val(data.invite_url).hide();
+        url.attr('readonly', 'readonly');
+        url.hide();
+        btn.parent().append(url);
+        url.slideDown();
+      });
+      return false;
+    });
+  });

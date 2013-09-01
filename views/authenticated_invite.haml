@@ -1,0 +1,20 @@
+%p.lead
+  Do you want to accept the invite from
+  =@inviter.nickname
+  ?
+
+%a.btn.btn-primary#accept_invite{:href => @accept_path} Accept
+
+:javascript
+  $(document).ready(function() {
+    $('#accept_invite').click(function() {
+      var url = $(this).attr('href');
+      var btn = $(this);
+      $.post(url, function(data) {
+        var label = $("<span/>").addClass("label label-success").text("Invite accepted!").hide();
+        btn.parent().append(label);
+        label.fadeIn();
+      });
+      return false;
+    });
+  });
