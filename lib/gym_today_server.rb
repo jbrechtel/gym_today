@@ -2,7 +2,7 @@ class GymTodayServer < Sinatra::Base
 
   include ChallengeHelper
 
-  use Rack::Session::Cookie
+  use Rack::Session::Cookie, secret: Cookie.secret
   use OmniAuth::Strategies::Twitter, Twitter.api_key, Twitter.secret
   use OmniAuth::Strategies::Facebook, Facebook.api_key, Facebook.secret
 

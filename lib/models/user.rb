@@ -1,5 +1,5 @@
 class User
-  attr_reader :nickname, :uuid, :connections
+  attr_accessor :nickname, :uuid, :connections
 
   def initialize(attrs = {})
     @nickname = attrs[:nickname]

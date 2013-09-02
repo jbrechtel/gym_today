@@ -8,6 +8,7 @@ require 'haml'
 require 'redis'
 require 'json'
 
+require_relative 'cookie'
 require_relative 'helpers/challenge_helper'
 require_relative 'models/invite'
 require_relative 'models/user'
