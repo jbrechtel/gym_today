@@ -4,6 +4,7 @@ class GymTodayServer < Sinatra::Base
 
   use Rack::Session::Cookie
   use OmniAuth::Strategies::Twitter, Twitter.api_key, Twitter.secret
+  use OmniAuth::Strategies::Facebook, Facebook.api_key, Facebook.secret
 
   set :root, File.join(File.dirname(__FILE__), '..')
 
