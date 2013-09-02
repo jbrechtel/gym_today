@@ -66,7 +66,6 @@ class GymTodayServer < Sinatra::Base
       user = UserRepository.find_or_create(user_key, nickname)
       session[:user] = user
       session[:user_key] = user_key
-      p auth
       redirect '/'
     end
   end

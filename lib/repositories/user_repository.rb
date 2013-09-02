@@ -1,7 +1,6 @@
 class UserRepository
   class << self
     def find_or_create(user_key, nickname)
-      p user_key
       uuid = redis.get(user_key)
       if(uuid)
         YAML::load(redis.get(uuid))
